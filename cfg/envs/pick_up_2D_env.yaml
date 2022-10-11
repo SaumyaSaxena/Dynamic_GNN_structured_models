@@ -1,0 +1,52 @@
+env: PickUp2DGymEnv
+
+scene:
+  dt: 0.05
+
+env_props:
+  initial_poses:
+    max_samples: 100
+    gripper:
+      randomize: True
+      position: [-1.0, 1.0]
+      velocity: [0., 0.]
+      position_ranges: 
+        low: [-1., -1.]
+        high: [1., 1.]
+      velocity_ranges: 
+        low: [0., 0.]
+        high: [0., 0.]
+    block:
+      randomize: True
+      position: [0.0, -1.0]
+      velocity: [0., 0.]
+      position_ranges: 
+        low: [-1., -1.]
+        high: [1., 1.]
+      velocity_ranges: 
+        low: [0., 0.]
+        high: [0., 0.]
+  dynamics:
+    gripper:
+      mass: 1.
+      dim: 0.04
+    block:
+      mass: 1.
+      dim: 0.04
+    restitution: 0
+
+gym:
+  episode_len: 200
+  goal:
+    randomize: True
+    indices_blocks_to_pick: 0
+    position: [1.0, 1.0]
+    velocity: [0., 0.]
+    position_ranges: 
+      low: [-1., -1.]
+      high: [1., 1.]
+    velocity_ranges: 
+      low: [0., 0.]
+      high: [0., 0.]
+  usage:
+    data_collection: True

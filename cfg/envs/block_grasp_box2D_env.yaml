@@ -1,0 +1,68 @@
+env: BlocksGraspXZ
+
+scene:
+  dt: 0.05
+  gui: False
+  screen_width: 300
+  screen_height: 300
+  pixels_per_meter: 100
+  gravity: [0.0, 0.0]
+
+env_props:
+  initial_poses:
+    max_samples: 100
+    gripper:
+      randomize: False
+      position: [-0.7, 0.0]
+      velocity: [0., 0.]
+      position_ranges: 
+        low: [-1., -1.]
+        high: [1., 1.]
+      velocity_ranges: 
+        low: [0., 0.]
+        high: [0., 0.]
+    blocks:
+      randomize: False
+      positions: 
+        - [-0.5, -0.4]
+        - [-0.3, 0.4]
+        - [0.3, 0.4]
+      velocities: 
+        - [0., 0.]
+        - [0., 0.]
+        - [0., 0.]
+      position_ranges: 
+        low: [-1., -1.]
+        high: [1., 1.]
+      velocity_ranges: 
+        low: [0., 0.]
+        high: [0., 0.]
+  dynamics:
+    gripper:
+      randomize: False
+      shape: 'circle' # 'box'
+      mass: 1.0
+      dim: 0.04 # Set this to 0.08 if using 'box' shape
+      friction: 0.0
+      restitution: 0.0
+    blocks:
+      randomize: False
+      shape: 'circle' # 'box'
+      mass: 1.0
+      dim: 0.04 # Set this to 0.08 if using 'box' shape
+      friction: 0.0
+      restitution: 0.0
+
+gym:
+  episode_len: 300
+  goal:
+    randomize: False
+    indices_blocks_to_pick: [0,1,2] # should correspond to objects in the scene
+    position: [0.7, 0.0]
+    velocity: [0., 0.]
+    position_ranges: 
+      low: [-1., -1.]
+      high: [1., 1.]
+    velocity_ranges: 
+      low: [0., 0.]
+      high: [0., 0.]

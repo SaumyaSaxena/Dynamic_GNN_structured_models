@@ -1,0 +1,72 @@
+env: DoorOpening
+
+scene:
+  dt: 0.05
+  gui: False
+  screen_width: 300
+  screen_height: 300
+  pixels_per_meter: 100
+  gravity: [0.0, 0.0]
+
+env_props:
+  initial_poses:
+    max_samples: 100
+    gripper:
+      randomize: False
+      position: [-0.5, 0.0]
+      velocity: [0., 0.]
+      position_ranges: 
+        low: [-1., -0.5]
+        high: [1., 0.5]
+      velocity_ranges: 
+        low: [0., 0.]
+        high: [0., 0.]
+    doors:
+      randomize: False
+      positions: 
+        - [0., 0.0]
+        # - [-1., -1.]
+        # - [1., 1.]
+        # - [-1., 1.]
+        # - [1., -1.]
+      velocities: 
+        - [0., 0.0]
+        # - [0., 0.]
+        # - [0., 0.]
+        # - [0., 0.]
+        # - [0., 0.]
+      position_ranges: 
+        low: [-1., 0.]
+        high: [1., 0.]
+      velocity_ranges: 
+        low: [0., 0.]
+        high: [0., 0.]
+  dynamics:
+    gripper:
+      randomize: False
+      shape: 'circle' # 'box'
+      mass: 1.0
+      dim: 0.04
+      friction: 0.0
+      restitution: 0.0
+    doors:
+      randomize: False
+      shape: 'box'
+      mass: 4.0
+      dimx: 0.05
+      dimy: 1.0
+      friction: 0.0
+      restitution: 0.0
+
+gym:
+  episode_len: 120
+  goal:
+    randomize: False
+    position: 75 # degrees
+    velocity: 0.
+    position_ranges: 
+      low: -80.
+      high: 80.
+    velocity_ranges: 
+      low: 0.
+      high: 0.

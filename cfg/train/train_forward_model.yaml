@@ -1,0 +1,131 @@
+debug: False
+gpu: 2
+seed: 0
+tag: ${now:%Y-%m-%d-%H-%M-%S}
+save_path_prefix: "EPD_temporal_forward_model_analytical_2objects_modes" 
+
+defaults:
+  - envs: pick_up_2D_env.yaml
+
+wandb:
+  logger:
+    entity: saumyas
+    project: Dynamic_GNN_structured_models
+    group: saumyas/EPD_temporal_forward_model_analytical_2objectpickup_modes
+    tags: ['debug']
+    offline: False
+  saver:
+    upload: True
+    monitor: 'val_loss'
+
+data:
+  dataset_class: Box2DEnvPickup2ObjsTemporalDataset
+
+train:
+  gpu: ${gpu}
+  lr: 1e-5
+  decay: 0.5
+  batch_size: 20
+  max_epochs: 50000
+  logger_type: 'tb' # 'wandb', 'tb'
+  train_val_split: 0.95
+  log_every_n_steps: 20
+  iterative: False
+  model_name: EPDTemporalObsLinearModelwithModesReactive
+  early_stopping:
+    use: False
+    params:
+      min_delta: 0.0
+      patience: 5
+      mode: min
+      check_finite: True
+
+models:
+  EPDLinearObsModel:
+    activation: 'relu'    # 'tanh', 'relu', 'leakyrelu'
+    hidden_layers_phi_R: [64, 64]
+    hidden_layers_phi_O: [64, 64]
+    hidden_layers_A: [64, 64]
+    hidden_layers_B: [64, 64]
+    scale_A: 5
+    scale_B: 5
+    num_message_passing_steps: 2
+  EPDLinearObsSpringMassDamperModel:
+    hidden_layers_phi_R: [64, 64]
+    hidden_layers_phi_O: [64, 64]
+    hidden_layers_mkc: [64, 64]
+    learn_impact_params: False
+    scale_params: 5.0
+    num_message_passing_steps: 2
+    heterogeneous_nodes_pn: True # True for Franka and door tasks
+  FrankaEPDLinearObsSpringMassDamperModel:
+    hidden_layers_phi_R: [64, 64]
+    hidden_layers_phi_O: [64, 64]
+    hidden_layers_mkc: [64, 64]
+    learn_impact_params: False
+    scale_params: 5.0
+    num_message_passing_steps: 2
+    heterogeneous_nodes_pn: True
+  EPDLinearObsSpringMassDamperModelwithModes:
+    hidden_layers_phi_R: [64, 64]
+    hidden_layers_phi_O: [64, 64]
+    hidden_layers_mkc: [64, 64]
+    learn_impact_params: False
+    scale_params: 5.0
+    num_message_passing_steps: 2
+    num_message_passing_steps_graphInf: 2
+    num_edge_types: 2
+    weight_fwd_dy: 1e+4
+    loss_edge_prior: True
+    weight_edge_prior: 5e+1
+    loss_edge_pairs: True
+    weight_edge_pairs: 1e+1
+    heterogeneous_nodes_pn: True # True for Franka and door tasks
+    sampling: 'argmax' # 'argmax', 'gumbel'
+    gumbel_decay: 0.999
+    gumbel_temp: 10.
+  EPDTemporalObsLinearModelwithModes:
+    hidden_layers_phi_R: [64, 64]
+    hidden_layers_phi_O: [64, 64]
+    hidden_layers_mkc: [64, 64]
+    learn_impact_params: False
+    scale_params: 5.0
+    num_message_passing_steps: 2
+    num_message_passing_steps_graphInf: 2
+    num_edge_types: 2
+    weight_fwd_dy: 1e+4
+    loss_edge_prior: True
+    weight_edge_prior: 5e+1
+    loss_edge_pairs: True
+    weight_edge_pairs: 1e+1
+    heterogeneous_edges_pn: False
+    heterogeneous_nodes_pn: False # True for Franka and door tasks
+    sampling: 'argmax' # 'argmax', 'gumbel'
+    gumbel_decay: 0.999
+    gumbel_temp: 10.
+  EPDTemporalObsLinearModelwithModesReactive:
+    hidden_layers_phi_R: [64, 64]
+    hidden_layers_phi_O: [64, 64]
+    hidden_layers_mkc: [64, 64]
+    learn_impact_params: False
+    scale_params: 5.0
+    num_message_passing_steps: 2
+    num_message_passing_steps_graphInf: 2
+    num_edge_types: 2
+    weight_fwd_dy: 1e+4
+    loss_edge_prior: True
+    weight_edge_prior: 5e+1
+    loss_edge_pairs: True
+    weight_edge_pairs: 1e+1
+    heterogeneous_edges_pn: False
+    heterogeneous_nodes_pn: False # True for Franka and door tasks
+    sampling: 'argmax' # 'argmax', 'gumbel'
+    gumbel_decay: 0.999
+    gumbel_temp: 10.
+
+use_checkpoint: False
+checkpoint_props:
+  cache_dir: /home/saumyas/Documents/experiment_data/plan_abstractions/cache
+  run_path: iam-lab/asm/runs/x6lqjggg
+  ckpt_path: '/home/saumyas/Projects/Dynamic_GNN_structured_models/outputs/2022-01-26/17-19-02/EPD_linear_obs_spring_mass_damper_model_analytical_3objects_mixed_modes/'
+  checkpoint: 'checkpoints/last.ckpt'

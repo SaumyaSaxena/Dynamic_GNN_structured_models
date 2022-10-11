@@ -1,0 +1,112 @@
+defaults:
+  - envs: franka_pickup_isaacgym_env.yaml
+
+data_root_dir: /home/saumyas/Documents/experiment_data/Dynamic_GNN_structured_models/franka_pickup_isaacgym_env_data/${skill_type}
+
+debug: False
+
+# Need this otherwise latest hydra version crashes.
+original_cwd: ''
+
+env: FrankaPickupIsaacgymEnv
+
+skill_type: FrankaEEImpedanceControlDynamicSlidePickUp
+skills: 
+  FrankaEEImpedanceControlFreeSpace:
+    T_exec_max: 300
+    n_batches: 1
+    initial_joints: [7.04672992e-01, 6.57021523e-01, 4.62187938e-02, -1.59888697e+00, -1.05825937e+00, 1.00930858e+00, 6.87666163e-02, 0.04, 0.04]
+    goal:
+      randomize: True
+      position: [0.4, -0.1, 0.85]
+      velocity: [0., 0., 0.]
+      position_ranges: 
+        low: [0.31, -0.35, 0.59]
+        high: [0.70, 0.35, 0.9]
+      velocity_ranges: 
+        low: [0., 0., 0.]
+        high: [0., 0., 0.]
+  FrankaEEImpedanceControlPickUp:
+    T_exec_max: 300
+    n_batches: 2000
+    initial_joints: [7.04672992e-01, 6.57021523e-01, 4.62187938e-02, -1.59888697e+00, -1.05825937e+00, 1.00930858e+00, 6.87666163e-02, 0.04, 0.04]
+    indx_block_to_pick: 0
+    goal:
+      randomize: False
+      position: [0.3, -0.1, 0.8]
+      velocity: [0., 0., 0.]
+      position_ranges: 
+        low: [0.31, -0.2, 0.59]
+        high: [0.6, 0.2, 0.8]
+      velocity_ranges: 
+        low: [0., 0., 0.]
+        high: [0., 0., 0.]
+  FrankaEEImpedanceControlDynamicPickUp:
+    T_exec_max: 400
+    n_batches: 10
+    initial_joints: [7.04672992e-01, 6.57021523e-01, 4.62187938e-02, -1.59888697e+00, -1.05825937e+00, 1.00930858e+00, 6.87666163e-02, 0.04, 0.04]
+    indx_block_to_pick: 0
+    goal:
+      randomize: True
+      position: [0.3, -0.2, 0.8]
+      velocity: [0., 0., 0.]
+      position_ranges: 
+        low: [0.31, -0.2, 0.59]
+        high: [0.6, 0.2, 0.8]
+      velocity_ranges: 
+        low: [0., 0., 0.]
+        high: [0., 0., 0.]
+  FrankaEEImpedanceControlDynamicSlidePickUp:
+    T_exec_max: 400
+    n_batches: 20
+    initial_joints: [7.04672992e-01, 6.57021523e-01, 4.62187938e-02, -1.59888697e+00, -1.05825937e+00, 1.00930858e+00, 6.87666163e-02, 0.04, 0.04]
+    indx_block_to_pick: 0
+    goal:
+      randomize: True
+      position: [0.3, -0.2, 0.8]
+      velocity: [0., 0., 0.]
+      position_ranges: 
+        low: [0.31, -0.2, 0.59]
+        high: [0.6, 0.2, 0.8]
+      velocity_ranges: 
+        low: [0., 0., 0.]
+        high: [0., 0., 0.]
+  FrankaiLQROpenLoopJointSpace:
+    T_exec_max: 300
+    n_batches: 1
+    initial_joints: [0., -0.78539816, 0., -2.35619449, 0., 1.57079633,  0.78539816, 0.04, 0.04] # end-effector pointing down position
+    goal:
+      randomize: False
+      joints: [3.17427255e-02, -7.59624898e-01, -7.84946824e-05, -2.36725044e+00, 2.32323306e-04, 1.60778940e+00, 8.17060471e-01]
+      # joints: [3.74379277e-01, 4.18429822e-01, -7.64995930e-04, -2.22433043e+00, -3.37647134e-03, 2.64148426e+00, 1.16199291e+00]
+      position: [0.51, 0.2, 0.59]
+      velocity: [0., 0., 0.]
+  FrankaiLQROpenLoopCartesianSpace:
+    T_exec_max: 300
+    n_batches: 1
+    initial_joints: [7.04672992e-01, 6.57021523e-01, 4.62187938e-02, -1.59888697e+00, -1.05825937e+00, 1.00930858e+00, 6.87666163e-02, 0.04, 0.04]
+    goal:
+      randomize: False
+      position: [0.5, -0.2, 0.7]
+      velocity: [0., 0., 0.]
+      position_ranges: 
+        low: [0.31, -0.35, 0.59]
+        high: [0.70, 0.35, 0.9]
+      velocity_ranges: 
+        low: [0., 0., 0.]
+        high: [0., 0., 0.]
+  FrankaiLQROpenLoopCartesianSpaceReactive:
+    T_exec_max: 300
+    n_batches: 1
+    initial_joints: [7.04672992e-01, 6.57021523e-01, 4.62187938e-02, -1.59888697e+00, -1.05825937e+00, 1.00930858e+00, 6.87666163e-02, 0.04, 0.04]
+    goal:
+      randomize: False
+      position: [0.5, -0.2, 0.7]
+      velocity: [0., 0., 0.]
+      position_ranges: 
+        low: [0.31, -0.35, 0.59]
+        high: [0.70, 0.35, 0.9]
+      velocity_ranges: 
+        low: [0., 0., 0.]
+        high: [0., 0., 0.]
+    
